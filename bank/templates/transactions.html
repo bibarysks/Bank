@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h5>Account - {{ account.id }}: {{ account.balance }} {{ account.currency }}</h5>
+<a href="/account/top_up/{{account.id}}" class="btn btn-success">Пополнить баланс</a>
+<a href="/account/transfer/{{account.id}}" class="btn btn-primary">Перевод денег</a>
+
+
+<table class="table table-bordered mt-3">
+    <thead>
+    <tr>
+        <th>transaction id</th>
+        <th>from_account</th>
+        <th>to_account</th>
+        <th>amount</th>
+        <th>date</th>
+        <th>balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for t in transactions %}
+    {% if t.from_account == t.to_account or t.to_account == account.id %}
+         <tr class="table-success">
+    {% else %}
+        <tr class="table-danger">
+    {% endif %}
+        <td>
+            {{t.id}}
+        </td>
+        <td>
+            {{t.from_account}}
+        </td>
+        <td>
+            {{t.to_account}}
+        </td>
+        <td>
+            {{t.amount}}
+        </td>
+        <td>{{t.date_time}}</td>
+        <td>{{t.balance}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
